@@ -83,9 +83,17 @@ const currentUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
 
+const logout = asyncHandler(async (req, res) => {
+  // Clear the token from the client-side
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.clearCookie("jwt");
+  res.status(200).json({ message: "User logged out!" });
+});
+
 module.exports = {
   getAllUsers,
   registerUsers,
   loginUsers,
   currentUser,
+  logout,
 };
